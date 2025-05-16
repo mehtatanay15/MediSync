@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import Cookies from "js-cookie";
 import axios from "axios";
 import Swal from "sweetalert2";
-import "../../styles/Loginpage.css"; // Import the CSS file with your custom styles
+import "../../styles/LoginPage.css"; // Import the CSS file with your custom styles
 
 const DoctorRegistrationForm = () => {
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdEmail, MdKeyboardArrowRight } from "react-icons/md";
 import forgotImg from "../assets/svg/login_img.svg"; // You can use the same image or a different one
-import "../styles/Loginpage.css"; // Using the same CSS file
+import "../styles/LoginPage.css"; // Using the same CSS file
 import Swal from "sweetalert2";
 
 export default function ForgotPassword() {

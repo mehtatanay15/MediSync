@@ -9,7 +9,7 @@ import {
   MdPassword,
 } from "react-icons/md";
 import resetImg from "../assets/svg/login_img.svg"; // You can use the same image or a different one
-import "../styles/Loginpage.css"; // Using the same CSS file
+import "../styles/LoginPage.css"; // Using the same CSS file
 
 export default function ChangePassword() {
   const navigate = useNavigate();

@@ -9,7 +9,7 @@ import {
   MdKeyboardArrowDown,
 } from "react-icons/md";
 import loginimg from "../assets/svg/login_img.svg";
-import "../styles/Loginpage.css";
+import "../styles/LoginPage.css";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {

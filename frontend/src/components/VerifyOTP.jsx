@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import otpImg from "../assets/svg/login_img.svg"; // You can use the same image or a different one
-import "../styles/Loginpage.css"; // Using the same CSS file
+import "../styles/LoginPage.css"; // Using the same CSS file
 import Swal from "sweetalert2";
 import axios from "axios";
 
