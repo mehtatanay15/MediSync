@@ -13,7 +13,7 @@ import PatientList from "./components/doctor/PatientList.jsx";
 import PatientProfile from "./components/doctor/PatientProfile.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
 import ChangePassword from "./components/ChangePassword.jsx";
-import VerifyOTP from "./components/VerifyOtp.jsx";
+import VerifyOTP from "./components/VerifyOTP.jsx";
 import DocProfile from "./components/doctor/DocProfile";
 import DoctorRegistration from "./components/doctor/DoctorRegistration";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
