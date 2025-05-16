@@ -10,7 +10,7 @@
   position: absolute;
   content: "";
   inset: 0;
-  background-image: url("https://s3-alpha-sig.figma.com/img/ab63/8fd6/4ea60644b00bfdf780803a69915d5af2?Expires=1744588800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=TRYrN0OwK6NXkbf2JvYCh4N~oh0cnlW314yTBn0RWfEW62vAGcohqS9OVw~qCFHig7C5qCZ~s003M0eC3NtVEhYQZRzTOk6tpm8nbuPEOncx2fZKHUGjF6bKtlAmT~U4BT5Nm-MtjBkXEmKMhtddmg3sKnHfG2AZ3k6GZW8lca1mv8UqhIspeSsQiKOK9w3jSyfMQZkmkhMvSuqFJfVAdNDDJMBQcSuh6Cisu-ta2bkVYA7zgz1V212i2R0s8VVfPqjGsUj8RIFe7WXQIavKnlicAZhlEd-1E-H65gByxdDHjdFcz99IovNXvDxB15KQlhWXvGIY~Cjo7WIWsoM6lQ__");
+  background-image: url("../components/doctor/images/docprofilebg.png");
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
   background-size: cover;

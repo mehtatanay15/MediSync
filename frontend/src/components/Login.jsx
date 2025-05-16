@@ -26,7 +26,7 @@ export default function Login() {
   const [apiError, setApiError] = useState("");
 
   // Available roles - matching the signup component
-  const roles = ["Doctor", "Clinic"];
+  const roles = ["Doctor"];
 
   // Toggle password visibility
   const togglePasswordVisibility = () => {

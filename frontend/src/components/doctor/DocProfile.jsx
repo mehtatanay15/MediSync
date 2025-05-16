@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuth } from "../../context/AuthContext";
-
+import docprofile from './images/doc.png'
 export const DoctorProfileForm = () => {
   const [activeTab, setActiveTab] = useState("About");
   const [loading, setLoading] = useState(false);
@@ -369,9 +369,9 @@ export default function DocProfile() {
               {userInfo ? "Dr. " + userInfo.name : ""}
             </p>
             <img
-              src="https://s3-alpha-sig.figma.com/img/2b53/e787/dafb719b4f12f078c490381172a450bc?Expires=1744588800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=LTAkxochCY9~te33yRaJv60NxhEfXei3NZ4gdtCS82RjTQeDtPbGa-qKLjr7OtyPDhDPF9dSenwHF~aMDq8NrmVmK2Yxk9X3rKrL4w334zQuKIIoUsBk8FtmMxwyqHJs--fNP7r66z274IQXQLbiKO9o2mZ4Zfb7VkKQBvzk3g07bFMa0JPW1UV~c-7xEo-GAvP9NRPO3jgxl9DBk~Q1-LEiyhMw0BLYorLdzITgF4rGDMpGYxansXLztkj8v5Uw5jTEfvJzivC76XYU8OWIW0Bn92PLTfkHxpTlHGwq0tQA79Rzh~NNYJQNBDFK2C0mLcmhYOVPSKrASKig5bah4w__"
+              src={docprofile}
               alt="Doctor profile image"
-              className="h-[40vw]"
+              className="h-[40vw] ml-40"
             />
           </div>
         </div>
