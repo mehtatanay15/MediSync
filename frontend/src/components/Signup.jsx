@@ -10,7 +10,7 @@ import {
   MdKeyboardArrowDown,
 } from "react-icons/md";
 import signupimg from "../assets/svg/login_img.svg";
-import "../styles/Signuppage.css"; // For gradient text and other custom styles
+import "../styles/SignupPage.css"; // For gradient text and other custom styles
 import Swal from "sweetalert2";
 
 export default function Signup() {
