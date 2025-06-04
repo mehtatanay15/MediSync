@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import { MdEmail, MdKeyboardArrowRight } from "react-icons/md";
 import forgotImg from "../assets/svg/login_img.svg"; // You can use the same image or a different one
 import "../styles/LoginPage.css"; // Using the same CSS file
@@ -60,6 +60,12 @@ export default function ForgotPassword() {
 
   return (
     <div className="h-screen w-screen bg-login-bg bg-cover bg-center flex items-center justify-center overflow-x-hidden overflow-y-auto">
+      <Link
+        to="/"
+        className="absolute top-6 left-6 login-button px-6 py-2 rounded-full text-white font-semibold text-sm transition-all hover:-translate-y-1 focus:outline-none z-10"
+      >
+        Back to Home
+      </Link>
       <div className="w-full h-full flex items-center justify-center">
         {/* Left side with title and image */}
         <div className="hidden md:flex md:w-3/5 h-full flex-col relative">

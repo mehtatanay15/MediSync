@@ -212,7 +212,7 @@ export function IntroBox() {
               doctor-patient interactions.
             </div>
             <button className="intro-buttons text-xs md:text-[12px] w-40 h-8 rounded-full self-center lg:self-end mt-3 lg:mt-2">
-              <a href="/signup">Register Your Clinic Now</a>
+              <a href="/signup">Register yourself now</a>
             </button>
           </div>
 
@@ -396,7 +396,7 @@ export function Footer() {
   return (
     <div className="text-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 md:px-12 lg:px-30 pt-12 pb-8 bg-[#01132C] text-white text-[12px] md:text-left">
       <div className="footer-list rounded">
-        <p className="font-semibold">MediSync</p>
+        <img src={logo} alt="MediSync" className="h-12 mb-4" />
         <ul className="mt-2">
           <li><a href="/about">About us</a></li>
           {/* <li><a href="/">Our Services</a></li> */}

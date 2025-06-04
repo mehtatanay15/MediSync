@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation,Link } from "react-router-dom";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import otpImg from "../assets/svg/login_img.svg"; // You can use the same image or a different one
 import "../styles/LoginPage.css"; // Using the same CSS file
@@ -193,6 +193,12 @@ export default function VerifyOTP() {
 
   return (
     <div className="h-screen w-screen bg-login-bg bg-cover bg-center flex items-center justify-center overflow-x-hidden overflow-y-auto">
+      <Link
+        to="/"
+        className="absolute top-6 left-6 login-button px-6 py-2 rounded-full text-white font-semibold text-sm transition-all hover:-translate-y-1 focus:outline-none z-10"
+      >
+        Back to Home
+      </Link>
       <div className="w-full h-full flex items-center justify-center">
         {/* Left side with title and image */}
         <div className="hidden md:flex md:w-3/5 h-full flex-col relative">
