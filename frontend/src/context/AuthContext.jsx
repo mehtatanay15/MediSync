@@ -161,7 +161,7 @@ export const AuthProvider = ({ children }) => {
     Swal.fire({
       icon: "success",
       title: "Login Successful",
-      text: `Welcome back${userInfo ? ", Dr. " + userInfo.name : ""}!`,
+      text: `Welcome back`,
       timer: 2000,
       showConfirmButton: false,
     });

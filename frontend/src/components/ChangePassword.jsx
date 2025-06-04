@@ -77,7 +77,7 @@ export default function ChangePassword() {
 
     // Form is valid, reset password
     console.log("Resetting password for:", email);
-    const response = await fetch("http://localhost:8500/user/resetPassword", {
+    const response = await fetch("https://medisync-backend-up4v.onrender.com/user/resetPassword", {
       method: "POST",
       headers: {
         "content-type": "application/json",

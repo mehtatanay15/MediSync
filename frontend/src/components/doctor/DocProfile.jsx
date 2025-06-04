@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { LocationDropdown, SidePanel } from "./DashBoard";
+import {  SidePanel } from "./DashBoard";
 import "../../styles/DocProfile.css";
 import Cookies from "js-cookie";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuth } from "../../context/AuthContext";
 import docprofile from './images/doc.png'
+
 export const DoctorProfileForm = () => {
   const [activeTab, setActiveTab] = useState("About");
   const [loading, setLoading] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
 
   const [formData, setFormData] = useState({
+    name: "",
     gender: "",
     experience: 0,
     consultation_fees: 0,
@@ -40,23 +43,45 @@ export const DoctorProfileForm = () => {
         );
 
         const doctorData = res.data;
+        console.log("Doctor data received:", doctorData);
 
-        const addressParts = doctorData.clinic_address
-          ? doctorData.clinic_address.split(",").map((part) => part.trim())
-          : [];
+        // Handle clinic address splitting more intelligently
+        let clinic_area = "";
+        let clinic_city = "";
+        
+        if (doctorData.clinic_address) {
+          const fullAddress = doctorData.clinic_address.trim();
+          const addressParts = fullAddress.split(",").map(part => part.trim());
+          
+          if (addressParts.length >= 2) {
+            // If there are multiple parts, take the first as area and join the rest as city
+            clinic_area = addressParts[0];
+            clinic_city = addressParts.slice(1).join(", ");
+          } else if (addressParts.length === 1) {
+            // If only one part, put it in area
+            clinic_area = addressParts[0];
+          }
+        }
 
         setFormData({
+          name: doctorData.name || "",
           gender: doctorData.gender || "",
           experience: doctorData.experience || 0,
           consultation_fees: doctorData.consultation_fees || 0,
           dob: doctorData.dob ? doctorData.dob.slice(0, 10) : "",
           specialization: doctorData.specialization || "",
           phone: doctorData.phone || "",
-          clinic_area: addressParts[0] || "",
-          clinic_city: addressParts[1] || "",
+          clinic_area: clinic_area,
+          clinic_city: clinic_city,
         });
       } catch (err) {
         console.error("Failed to fetch doctor profile", err);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to load profile data. Please try refreshing the page.",
+          confirmButtonColor: "#3085d6",
+        });
       }
     };
 
@@ -65,6 +90,14 @@ export const DoctorProfileForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
+    // Clear validation error for this field when user starts typing
+    if (validationErrors[name]) {
+      setValidationErrors(prev => ({
+        ...prev,
+        [name]: ""
+      }));
+    }
 
     if (["phone", "experience", "consultation_fees"].includes(name)) {
       const numericValue = value.replace(/\D/g, "");
@@ -83,9 +116,91 @@ export const DoctorProfileForm = () => {
     }
   };
 
+  // Validation function
+  const validateForm = () => {
+    const errors = {};
+    
+    if (!formData.name.trim()) {
+      errors.name = "Name is required";
+    } else if (formData.name.trim().length < 2) {
+      errors.name = "Name must be at least 2 characters long";
+    }
+    
+    if (!formData.dob) {
+      errors.dob = "Date of birth is required";
+    } else {
+      const today = new Date();
+      const birthDate = new Date(formData.dob);
+      const age = today.getFullYear() - birthDate.getFullYear();
+      if (age < 22 || age > 80) {
+        errors.dob = "Age must be between 22 and 80 years";
+      }
+    }
+    
+    if (!formData.gender) {
+      errors.gender = "Gender is required";
+    }
+    
+    if (!formData.phone) {
+      errors.phone = "Phone number is required";
+    } else if (formData.phone.length !== 10) {
+      errors.phone = "Phone number must be exactly 10 digits";
+    } else if (!/^[6-9]/.test(formData.phone)) {
+      errors.phone = "Please enter a valid Indian mobile number";
+    }
+    
+    if (!formData.experience && formData.experience !== 0) {
+      errors.experience = "Experience is required";
+    } else if (formData.experience < 0) {
+      errors.experience = "Experience cannot be negative";
+    } else if (formData.experience > 60) {
+      errors.experience = "Experience cannot exceed 60 years";
+    }
+    
+    if (!formData.specialization.trim()) {
+      errors.specialization = "Specialization is required";
+    } else if (formData.specialization.trim().length < 3) {
+      errors.specialization = "Specialization must be at least 3 characters long";
+    }
+    
+    if (!formData.consultation_fees && formData.consultation_fees !== 0) {
+      errors.consultation_fees = "Consultation fees is required";
+    } else if (formData.consultation_fees <= 0) {
+      errors.consultation_fees = "Consultation fees must be greater than 0";
+    } else if (formData.consultation_fees > 50000) {
+      errors.consultation_fees = "Consultation fees cannot exceed ₹50,000";
+    }
+    
+    if (!formData.clinic_area.trim()) {
+      errors.clinic_area = "Clinic area is required";
+    } else if (formData.clinic_area.trim().length < 3) {
+      errors.clinic_area = "Clinic area must be at least 3 characters long";
+    }
+    
+    if (!formData.clinic_city.trim()) {
+      errors.clinic_city = "Clinic city is required";
+    } else if (formData.clinic_city.trim().length < 2) {
+      errors.clinic_city = "Clinic city must be at least 2 characters long";
+    }
+    
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const tabs = ["About", "Experience", "Address"];
 
   const handleUpdate = async () => {
+    // Validate form before submission
+    if (!validateForm()) {
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        text: "Please fix all validation errors before updating.",
+        confirmButtonColor: "#3085d6",
+      });
+      return;
+    }
+
     setLoading(true);
 
     let userId;
@@ -117,14 +232,20 @@ export const DoctorProfileForm = () => {
       return;
     }
 
+    // Construct the complete clinic address
+    const fullClinicAddress = formData.clinic_area.trim() && formData.clinic_city.trim() 
+      ? `${formData.clinic_area.trim()}, ${formData.clinic_city.trim()}`
+      : formData.clinic_area.trim() || formData.clinic_city.trim();
+
     const requestBody = {
-      experience: formData.experience,
-      consultation_fees: formData.consultation_fees,
+      name: formData.name.trim(),
+      experience: Number(formData.experience),
+      consultation_fees: Number(formData.consultation_fees),
       gender: formData.gender,
       dob: formData.dob,
-      specialization: formData.specialization,
+      specialization: formData.specialization.trim(),
       phone: formData.phone,
-      clinic_address: `${formData.clinic_area}, ${formData.clinic_city}`,
+      clinic_address: fullClinicAddress,
     };
 
     try {
@@ -134,6 +255,7 @@ export const DoctorProfileForm = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -149,12 +271,20 @@ export const DoctorProfileForm = () => {
     } catch (err) {
       console.error("Update failed", err);
 
+      let errorMessage = "Failed to update profile. Please try again.";
+      
+      if (err.response?.data?.message) {
+        errorMessage = err.response.data.message;
+      } else if (err.response?.status === 400) {
+        errorMessage = "Invalid data provided. Please check all fields.";
+      } else if (err.response?.status === 401) {
+        errorMessage = "Authentication failed. Please log in again.";
+      }
+
       Swal.fire({
         icon: "error",
         title: "Update Failed",
-        text:
-          err.response?.data?.message ||
-          "Failed to update profile. Please try again.",
+        text: errorMessage,
         confirmButtonColor: "#3085d6",
       });
     } finally {
@@ -190,9 +320,30 @@ export const DoctorProfileForm = () => {
           }`}
         >
           <div className="grid gap-4 mb-4">
+            {/* Name Field */}
             <div>
               <label className="block text-sm font-semibold mb-1">
-                Date Of Birth:
+                Full Name: *
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                disabled={activeTab !== "About"}
+                onChange={handleChange}
+                className={`w-full border rounded-md p-2 text-sm ${
+                  validationErrors.name ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Enter your full name"
+              />
+              {validationErrors.name && (
+                <p className="text-red-500 text-xs mt-1">{validationErrors.name}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold mb-1">
+                Date Of Birth: *
               </label>
               <input
                 type="date"
@@ -200,32 +351,43 @@ export const DoctorProfileForm = () => {
                 value={formData.dob}
                 disabled={activeTab !== "About"}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md p-2 text-sm"
+                max={new Date(new Date().setFullYear(new Date().getFullYear() - 22)).toISOString().split('T')[0]}
+                className={`w-full border rounded-md p-2 text-sm ${
+                  validationErrors.dob ? 'border-red-500' : 'border-gray-300'
+                }`}
               />
+              {validationErrors.dob && (
+                <p className="text-red-500 text-xs mt-1">{validationErrors.dob}</p>
+              )}
             </div>
 
             <div>
               <label className="block text-sm font-semibold mb-1">
-                Gender:
+                Gender: *
               </label>
               <select
                 name="gender"
                 value={formData.gender}
                 disabled={activeTab !== "About"}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md p-2 text-sm"
+                className={`w-full border rounded-md p-2 text-sm ${
+                  validationErrors.gender ? 'border-red-500' : 'border-gray-300'
+                }`}
               >
                 <option value="">Select Gender</option>
                 <option value="Female">Female</option>
                 <option value="Male">Male</option>
                 <option value="Other">Other</option>
               </select>
+              {validationErrors.gender && (
+                <p className="text-red-500 text-xs mt-1">{validationErrors.gender}</p>
+              )}
             </div>
 
             {/* Phone Number */}
             <div>
               <label className="block text-sm font-semibold mb-1">
-                Phone No.:
+                Phone No.: *
               </label>
               <input
                 type="text"
@@ -234,9 +396,14 @@ export const DoctorProfileForm = () => {
                 onChange={handleChange}
                 disabled={activeTab !== "About"}
                 maxLength={10}
-                className="w-full border border-gray-300 rounded-md p-2 text-sm"
+                className={`w-full border rounded-md p-2 text-sm ${
+                  validationErrors.phone ? 'border-red-500' : 'border-gray-300'
+                }`}
                 placeholder="Enter 10-digit phone number"
               />
+              {validationErrors.phone && (
+                <p className="text-red-500 text-xs mt-1">{validationErrors.phone}</p>
+              )}
             </div>
           </div>
         </div>
@@ -251,7 +418,7 @@ export const DoctorProfileForm = () => {
         >
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-1">
-              Years of Experience:
+              Years of Experience: *
             </label>
             <input
               type="text"
@@ -259,14 +426,19 @@ export const DoctorProfileForm = () => {
               value={formData.experience}
               onChange={handleChange}
               disabled={activeTab !== "Experience"}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm"
+              className={`w-full border rounded-md p-2 text-sm ${
+                validationErrors.experience ? 'border-red-500' : 'border-gray-300'
+              }`}
               placeholder="Enter years of experience"
             />
+            {validationErrors.experience && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.experience}</p>
+            )}
           </div>
 
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-1">
-              Specialization:
+              Specialization: *
             </label>
             <input
               type="text"
@@ -274,14 +446,19 @@ export const DoctorProfileForm = () => {
               value={formData.specialization}
               disabled={activeTab !== "Experience"}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm"
+              className={`w-full border rounded-md p-2 text-sm ${
+                validationErrors.specialization ? 'border-red-500' : 'border-gray-300'
+              }`}
               placeholder="E.g., Cardiology, Pediatrics, etc."
             />
+            {validationErrors.specialization && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.specialization}</p>
+            )}
           </div>
 
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-1">
-              Consultation Fees (₹):
+              Consultation Fees (₹): *
             </label>
             <input
               type="text"
@@ -289,9 +466,14 @@ export const DoctorProfileForm = () => {
               value={formData.consultation_fees}
               disabled={activeTab !== "Experience"}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm"
+              className={`w-full border rounded-md p-2 text-sm ${
+                validationErrors.consultation_fees ? 'border-red-500' : 'border-gray-300'
+              }`}
               placeholder="Enter consultation fees"
             />
+            {validationErrors.consultation_fees && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.consultation_fees}</p>
+            )}
           </div>
         </div>
 
@@ -305,7 +487,7 @@ export const DoctorProfileForm = () => {
         >
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-1">
-              Clinic Area / Street:
+              Clinic Area / Street: *
             </label>
             <input
               type="text"
@@ -313,14 +495,19 @@ export const DoctorProfileForm = () => {
               value={formData.clinic_area}
               disabled={activeTab !== "Address"}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm"
+              className={`w-full border rounded-md p-2 text-sm ${
+                validationErrors.clinic_area ? 'border-red-500' : 'border-gray-300'
+              }`}
               placeholder="Enter clinic area or street"
             />
+            {validationErrors.clinic_area && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.clinic_area}</p>
+            )}
           </div>
 
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-1">
-              Clinic City and Pincode:
+              Clinic City and Pincode: *
             </label>
             <input
               type="text"
@@ -328,17 +515,36 @@ export const DoctorProfileForm = () => {
               value={formData.clinic_city}
               disabled={activeTab !== "Address"}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm"
-              placeholder="Enter clinic city"
+              className={`w-full border rounded-md p-2 text-sm ${
+                validationErrors.clinic_city ? 'border-red-500' : 'border-gray-300'
+              }`}
+              placeholder="Enter clinic city and pincode"
             />
+            {validationErrors.clinic_city && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.clinic_city}</p>
+            )}
           </div>
+
+          {/* Display Complete Address Preview */}
+          {(formData.clinic_area || formData.clinic_city) && (
+            <div className="mt-4 p-2 bg-blue-50 rounded-md">
+              <label className="block text-xs font-semibold text-gray-600 mb-1">
+                Complete Address Preview:
+              </label>
+              <p className="text-sm text-gray-800">
+                {formData.clinic_area && formData.clinic_city 
+                  ? `${formData.clinic_area}, ${formData.clinic_city}`
+                  : formData.clinic_area || formData.clinic_city}
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
       <button
         onClick={handleUpdate}
         disabled={loading}
-        className={`mt-6 px-6 py-2 bg-[#5372A1] text-white rounded-full ${
+        className={`mt-6 px-6 py-2 bg-[#5372A1] text-white rounded-full hover:bg-[#4a6491] transition-colors ${
           loading ? "opacity-70 cursor-not-allowed" : ""
         }`}
       >

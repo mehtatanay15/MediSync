@@ -111,7 +111,7 @@ export default function VerifyOTP() {
     }
     // Form is valid, proceed to change password
     console.log(email, otp.join(""), isSignUp);
-    const response = await fetch("http://localhost:8500/user/verifyOTP", {
+    const response = await fetch("https://medisync-backend-up4v.onrender.com/user/verifyOTP", {
       method: "POST",
       headers: {
         "content-type": "application/json",

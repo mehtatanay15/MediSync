@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Import axios for API requests
 import {
   MdPerson,
   MdEmail,
@@ -27,7 +26,7 @@ export default function Signup() {
   const [apiError, setApiError] = useState("");
 
   // Available roles - updated to match backend requirements
-  const roles = ["Doctor", "Clinic"];
+  const roles = ["Doctor"];
 
   // Toggle password visibility
   const togglePasswordVisibility = () => {
@@ -45,6 +44,13 @@ export default function Signup() {
     setShowRoleOptions(false);
   };
 
+  // Password criteria checks
+  const hasMinLength = password.length >= 8;
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,9 +61,13 @@ export default function Signup() {
     if (!name) errors.name = "Name is required";
     if (!email) errors.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(email)) errors.email = "Email is invalid";
-    if (!password) errors.password = "Password is required";
-    else if (password.length < 6)
-      errors.password = "Password must be at least 6 characters";
+    if (!password) {
+      errors.password = "Password is required";
+    } else if (password.length < 8) {
+      errors.password = "Password must be at least 8 characters";
+    } else if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar) {
+      errors.password = "Password must meet all criteria";
+    }
     if (!selectedRole) errors.role = "Please select a role";
     if (!agreedToTerms)
       errors.terms = "You must agree to the terms and conditions";
@@ -79,7 +89,7 @@ export default function Signup() {
       //     role: selectedRole,
       //   }
       // );
-      const response = await fetch(`http://localhost:8500/user/sendOTP`, {
+      const response = await fetch(`https://medisync-backend-up4v.onrender.com/user/sendOTP`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -281,6 +291,35 @@ export default function Signup() {
                     {formErrors.password}
                   </p>
                 )}
+              </div>
+
+              {/* Password Requirements */}
+              <div className="bg-gray-50 rounded-xl p-4 mb-6">
+                <p className="text-gray-600 text-sm font-medium mb-2">
+                  Password must contain:
+                </p>
+                <ul className="space-y-1">
+                  <li className={`text-xs flex items-center ${hasMinLength ? "text-green-500" : "text-gray-400"}`}>
+                    <span className="mr-2">{hasMinLength ? "✓" : "○"}</span>
+                    At least 8 characters
+                  </li>
+                  <li className={`text-xs flex items-center ${hasUpperCase ? "text-green-500" : "text-gray-400"}`}>
+                    <span className="mr-2">{hasUpperCase ? "✓" : "○"}</span>
+                    One uppercase letter
+                  </li>
+                  <li className={`text-xs flex items-center ${hasLowerCase ? "text-green-500" : "text-gray-400"}`}>
+                    <span className="mr-2">{hasLowerCase ? "✓" : "○"}</span>
+                    One lowercase letter
+                  </li>
+                  <li className={`text-xs flex items-center ${hasNumber ? "text-green-500" : "text-gray-400"}`}>
+                    <span className="mr-2">{hasNumber ? "✓" : "○"}</span>
+                    One number
+                  </li>
+                  <li className={`text-xs flex items-center ${hasSpecialChar ? "text-green-500" : "text-gray-400"}`}>
+                    <span className="mr-2">{hasSpecialChar ? "✓" : "○"}</span>
+                    One special character
+                  </li>
+                </ul>
               </div>
 
               {/* Terms and Conditions */}

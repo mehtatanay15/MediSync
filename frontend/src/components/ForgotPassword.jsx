@@ -29,7 +29,7 @@ export default function ForgotPassword() {
     }
     console.log("here");
     // Form is valid, proceed to OTP verification
-    const response = await fetch(`http://localhost:8500/user/sendOTP`, {
+    const response = await fetch(`https://medisync-backend-up4v.onrender.com/user/sendOTP`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
