@@ -9,12 +9,12 @@ import {
   MdKeyboardArrowDown,
 } from "react-icons/md";
 import signupimg from "../assets/svg/login_img.svg";
-import "../styles/SignupPage.css"; // For gradient text and other custom styles
+import "../styles/SignupPage.css";
 import Swal from "sweetalert2";
 
 export default function Signup() {
   const navigate = useNavigate();
-  const [name, setName] = useState(""); // Changed from username to name to match API
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +25,7 @@ export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState("");
 
-  // Available roles - updated to match backend requirements
+  // Available roles
   const roles = ["Doctor"];
 
   // Toggle password visibility
@@ -225,7 +225,7 @@ export default function Signup() {
 
               {/* Input Fields */}
               <div className="bg-white rounded-xl shadow-md p-4 mb-4">
-                {/* Name Input - Changed from username to name */}
+                {/* Name Input*/}
                 <div
                   className={`flex items-center border-b-2 ${
                     formErrors.name ? "border-red-500" : "border-gray-200"

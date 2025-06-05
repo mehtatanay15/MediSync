@@ -18,7 +18,7 @@ import {
 import "../../styles/Dashboard.css";
 import { SidePanel } from "./DashBoard";
 import axios from "axios";
-import { useAuth } from "../../context/AuthContext"; // Import useAuth
+import { useAuth } from "../../context/AuthContext"; 
 
 export function LocationDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -200,7 +200,6 @@ export default function PatientList() {
     const fetchPatients = async () => {
       try {
         setLoading(true);
-        // Use authToken from context instead of localStorage
         const response = await axios.get(
           "https://medisync-backend-up4v.onrender.com/user/doctor/profile/patients",
           {
@@ -221,7 +220,7 @@ export default function PatientList() {
     if (authToken) {
       fetchPatients();
     }
-  }, [authToken]); // Add authToken as dependency
+  }, [authToken]); 
 
   const handleViewPatientDetails = (patientId) => {
     navigate(`/doctor/patient/${patientId}`);

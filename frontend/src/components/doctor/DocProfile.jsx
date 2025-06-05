@@ -45,7 +45,6 @@ export const DoctorProfileForm = () => {
         const doctorData = res.data;
         console.log("Doctor data received:", doctorData);
 
-        // Handle clinic address splitting more intelligently
         let clinic_area = "";
         let clinic_city = "";
         
@@ -54,11 +53,9 @@ export const DoctorProfileForm = () => {
           const addressParts = fullAddress.split(",").map(part => part.trim());
           
           if (addressParts.length >= 2) {
-            // If there are multiple parts, take the first as area and join the rest as city
             clinic_area = addressParts[0];
             clinic_city = addressParts.slice(1).join(", ");
           } else if (addressParts.length === 1) {
-            // If only one part, put it in area
             clinic_area = addressParts[0];
           }
         }
@@ -91,7 +88,6 @@ export const DoctorProfileForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     
-    // Clear validation error for this field when user starts typing
     if (validationErrors[name]) {
       setValidationErrors(prev => ({
         ...prev,

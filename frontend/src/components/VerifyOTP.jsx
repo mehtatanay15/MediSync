@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation,Link } from "react-router-dom";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import otpImg from "../assets/svg/login_img.svg"; // You can use the same image or a different one
-import "../styles/LoginPage.css"; // Using the same CSS file
+import otpImg from "../assets/svg/login_img.svg";
+import "../styles/LoginPage.css"; 
 import Swal from "sweetalert2";
 import axios from "axios";
 
@@ -23,7 +23,7 @@ export default function VerifyOTP() {
   const [isTimerActive, setIsTimerActive] = useState(true);
   const [formErrors, setFormErrors] = useState({});
 
-  // Updated to have 6 refs instead of 4
+  
   const inputRefs = [
     useRef(),
     useRef(),
@@ -167,7 +167,7 @@ export default function VerifyOTP() {
         });
         navigate("/login");
         return;
-        // Redirect to login page after successful signup
+ 
       } else {
         Swal.fire({
           icon: "error",

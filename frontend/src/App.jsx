@@ -4,7 +4,7 @@ import "./App.css";
 import Signup from "./components/Signup";
 import Login from "./components/Login.jsx";
 import LandingPage from "./components/LandingPage";
-import AboutUs from "./components/AboutUs"; // Import the new AboutUs component
+import AboutUs from "./components/AboutUs";
 import DashBoard from "./components/doctor/DashBoard";
 import Appointment from "./components/doctor/Appointment";
 import Reports from "./components/doctor/Reports.jsx";
@@ -39,7 +39,7 @@ function App() {
               element={<DoctorRegistration />}
             ></Route> */}
 
-            {/* Doctor Registration Route - Requires authentication but not profile completion */}
+            {/* Doctor Registration Route*/}
             <Route
               path="/doctor-registration"
               element={
@@ -52,7 +52,7 @@ function App() {
               }
             />
 
-            {/* Doctor Routes - Require both authentication and profile completion */}
+            {/* Doctor Routes*/}
             <Route
               path="/doctor"
               element={

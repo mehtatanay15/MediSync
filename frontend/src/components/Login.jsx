@@ -25,20 +25,20 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState("");
 
-  // Available roles - matching the signup component
+  // Available roles
   const roles = ["Doctor"];
 
-  // Toggle password visibility
+ 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  // Toggle role dropdown
+
   const toggleRoleDropdown = () => {
     setShowRoleOptions(!showRoleOptions);
   };
 
-  // Select a role
+
   const handleRoleSelect = (role) => {
     setSelectedRole(role);
     setShowRoleOptions(false);
@@ -75,12 +75,9 @@ export default function Login() {
 
       console.log("Login successful:", response.data);
 
-      // Get token from response
       const token = response.data.token;
       const user = response.data.user;
 
-      // Call the login function from AuthContext with the token
-      // The AuthContext will handle decoding the token and routing
       login(token, user);
     } catch (error) {
       console.error("Login error:", error);
@@ -94,12 +91,12 @@ export default function Login() {
     }
   };
 
-  // Navigate to signup page
+ 
   const navigateToSignup = () => {
     navigate("/signup");
   };
 
-  // Navigate to forgot password page
+
   const navigateToForgotPassword = () => {
     navigate("/forgot-password");
   };

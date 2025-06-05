@@ -12,10 +12,9 @@ import {
 import { SidePanel, LocationDropdown } from "./DashBoard";
 import "../../styles/Dashboard.css";
 import axios from "axios";
-import { useAuth } from "../../context/AuthContext"; // Import useAuth
+import { useAuth } from "../../context/AuthContext";
 import Swal from "sweetalert2";
 
-// Card component for consistent styling across all cards
 const Card = ({ children, className = "" }) => {
   return (
     <div className={`bg-white rounded-lg shadow-md p-6 ${className}`}>
@@ -24,7 +23,6 @@ const Card = ({ children, className = "" }) => {
   );
 };
 
-// Get initials from name
 const getInitials = (name) => {
   if (!name) return "NA";
   return name
@@ -37,7 +35,6 @@ const getInitials = (name) => {
 
 // Component for patient's basic info
 const PatientBasicInfo = ({ patient }) => {
-  // Format date function
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
@@ -89,7 +86,6 @@ const PatientBasicInfo = ({ patient }) => {
   );
 };
 
-// Reusable stats indicator component for consistent styling
 const StatsIndicator = ({ icon, text }) => {
   return (
     <div className="flex items-center justify-center bg-blue-50 p-3 rounded-lg">
@@ -209,13 +205,12 @@ const PrescriptionForm = ({ isOpen, onClose, patient, doctorId, onSubmitSuccess,
     remarks: "",
     patient: patient?._id || "",
     doctor: doctorId || "",
-    appointment: appointmentId || "", // Use the passed appointmentId
-    medical_tests: "", // Optional field
+    appointment: appointmentId || "", 
+    medical_tests: "", 
   });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // If editing an existing prescription, populate the form
     if (prescriptionToEdit) {
       setFormData({
         medicine: prescriptionToEdit.medicine || "",
@@ -227,7 +222,6 @@ const PrescriptionForm = ({ isOpen, onClose, patient, doctorId, onSubmitSuccess,
         medical_tests: prescriptionToEdit.medical_tests || "",
       });
     } else {
-      // Reset form for new prescription
       setFormData({
         medicine: "",
         disease: "",
@@ -381,7 +375,7 @@ const PrescriptionForm = ({ isOpen, onClose, patient, doctorId, onSubmitSuccess,
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               required
-              readOnly={!!appointmentId} // Make read-only if appointmentId exists
+              readOnly={!!appointmentId} 
             />
           </div>
 
@@ -546,7 +540,7 @@ export default function PatientProfile() {
   const { patientId } = useParams();
   const location = useLocation();
   const appointmentId = location.state?.appointmentId;
-  const { authToken, user } = useAuth(); // Use authToken and user from context
+  const { authToken, user } = useAuth(); 
   const [activeTab, setActiveTab] = useState("medical");
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -558,7 +552,6 @@ export default function PatientProfile() {
     const fetchPatientDetails = async () => {
       try {
         setLoading(true);
-        // Use authToken from context instead of localStorage
         const response = await axios.get(
           `https://medisync-backend-up4v.onrender.com/user/doctor/getPatient/${patientId}`,
           {
@@ -579,10 +572,10 @@ export default function PatientProfile() {
     if (patientId && authToken) {
       fetchPatientDetails();
     }
-  }, [patientId, authToken]); // Add authToken as dependency
+  }, [patientId, authToken]); 
 
   const handleAddPrescription = () => {
-    setSelectedPrescription(null); // Clear any selected prescription
+    setSelectedPrescription(null); 
     setShowPrescriptionForm(true);
   };
 
@@ -592,7 +585,6 @@ export default function PatientProfile() {
   };
 
   const handlePrescriptionSubmitSuccess = (newPrescription) => {
-    // Update the patient state with the new prescription
     if (selectedPrescription) {
       // Update existing prescription in the list
       setPatient(prevPatient => ({
@@ -609,7 +601,6 @@ export default function PatientProfile() {
       }));
     }
     
-    // Switch to prescription tab to show the new/updated prescription
     setActiveTab("prescription");
   };
 
@@ -693,7 +684,7 @@ export default function PatientProfile() {
                     prescriptions={patient.prescriptions || []}
                     onAddPrescription={handleAddPrescription}
                     onEditPrescription={handleEditPrescription}
-                    showAddButton={!!appointmentId} // Only show button if appointmentId exists
+                    showAddButton={!!appointmentId} 
                   />
                 )}
               </div>
@@ -706,10 +697,10 @@ export default function PatientProfile() {
           isOpen={showPrescriptionForm}
           onClose={() => setShowPrescriptionForm(false)}
           patient={patient}
-          doctorId={user?._id} // Pass the logged-in doctor's ID
+          doctorId={user?._id} 
           onSubmitSuccess={handlePrescriptionSubmitSuccess}
           prescriptionToEdit={selectedPrescription}
-          appointmentId={appointmentId} // Pass the appointmentId
+          appointmentId={appointmentId}
         />
       </div>
     </div>

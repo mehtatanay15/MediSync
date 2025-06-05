@@ -1,8 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 
-// Spinner.js (optional)
 // Spinner.js
-import React from "react";
 import { motion } from "framer-motion";
 
 export const Spinner = () => {
@@ -38,7 +36,7 @@ const ProtectedRoute = ({ allowedRoles, requireProfile = true, children }) => {
     useAuth();
 
   if (isLoading) {
-    return <Spinner />; // You can customize this with a spinner
+    return <Spinner />;
   }
 
   if (!isAuthenticated()) {

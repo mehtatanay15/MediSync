@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import "../../styles/Dashboard.css";
 import { useAuth } from "../../context/AuthContext";
 
-import search from "./images/Search.svg";
-import location from "./images/location.svg";
-import approve from "./images/Approve.svg";
-import cancel from "./images/Cancel.svg";
+// import search from "./images/Search.svg";
+// import location from "./images/location.svg";
+// import approve from "./images/Approve.svg";
+// import cancel from "./images/Cancel.svg";
 import { useNavigate } from "react-router-dom";
 import {
   RiDashboardLine,
@@ -20,77 +20,77 @@ import {
 import logo from "./images/logo.png";
 import Cookies from "js-cookie";
 
-export function LocationDropdown() {
-  // State to manage whether the dropdown is visible or not
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState("Select Location");
+// export function LocationDropdown() {
+//   // State to manage whether the dropdown is visible or not
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [selectedLocation, setSelectedLocation] = useState("Select Location");
 
-  // Array of locations
-  const locations = ["New York", "Los Angeles", "Chicago", "San Francisco"];
+//   // Array of locations
+//   const locations = ["New York", "Los Angeles", "Chicago", "San Francisco"];
 
-  // Function to handle selecting a location
-  const selectLocation = (location) => {
-    setSelectedLocation(location);
-    setIsOpen(false);
-  };
+//   // Function to handle selecting a location
+//   const selectLocation = (location) => {
+//     setSelectedLocation(location);
+//     setIsOpen(false);
+//   };
 
-  return (
-    <div className="relative inline-block text-right drop-down rouned-[10px] w-[15vw]">
-      <div className="flex">
-        <img src={location} className="relative left-6" />
-        <button
-          type="button"
-          className="inline-flex w-full justify-end gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-[#A1A9B888] ring-1 shadow-xs ring-gray-300 ring-inset border-0 hover:bg-gray-50 "
-          id="menu-button"
-          aria-expanded={isOpen}
-          aria-haspopup="true"
-          onClick={() => setIsOpen(!isOpen)} // Toggle dropdown visibility
-        >
-          {selectedLocation}
-          <svg
-            className="-mr-1 size-5 text-gray-400"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-      </div>
+//   return (
+//     <div className="relative inline-block text-right drop-down rouned-[10px] w-[15vw]">
+//       <div className="flex">
+//         <img src={location} className="relative left-6" />
+//         <button
+//           type="button"
+//           className="inline-flex w-full justify-end gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-[#A1A9B888] ring-1 shadow-xs ring-gray-300 ring-inset border-0 hover:bg-gray-50 "
+//           id="menu-button"
+//           aria-expanded={isOpen}
+//           aria-haspopup="true"
+//           onClick={() => setIsOpen(!isOpen)} // Toggle dropdown visibility
+//         >
+//           {selectedLocation}
+//           <svg
+//             className="-mr-1 size-5 text-gray-400"
+//             viewBox="0 0 20 20"
+//             fill="currentColor"
+//             aria-hidden="true"
+//           >
+//             <path
+//               fillRule="evenodd"
+//               d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+//               clipRule="evenodd"
+//             />
+//           </svg>
+//         </button>
+//       </div>
 
-      {/* Dropdown menu */}
-      {isOpen && (
-        <div
-          className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden"
-          role="menu"
-          aria-orientation="vertical"
-          aria-labelledby="menu-button"
-          tabindex="-1"
-        >
-          <div className="py-1" role="none">
-            {/* Loop through locations and display them as menu items */}
-            {locations.map((location, index) => (
-              <a
-                href="#"
-                key={index}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                role="menuitem"
-                tabIndex="-1"
-                onClick={() => selectLocation(location)} // Set location and close dropdown
-              >
-                {location}
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+//       {/* Dropdown menu */}
+//       {isOpen && (
+//         <div
+//           className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden"
+//           role="menu"
+//           aria-orientation="vertical"
+//           aria-labelledby="menu-button"
+//           tabindex="-1"
+//         >
+//           <div className="py-1" role="none">
+//             {/* Loop through locations and display them as menu items */}
+//             {locations.map((location, index) => (
+//               <a
+//                 href="#"
+//                 key={index}
+//                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+//                 role="menuitem"
+//                 tabIndex="-1"
+//                 onClick={() => selectLocation(location)} // Set location and close dropdown
+//               >
+//                 {location}
+//               </a>
+//             ))}
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 
 export function SidePanel({ propActiveButton }) {
   const { logout, userInfo } = useAuth();
@@ -222,24 +222,19 @@ export function SidePanel({ propActiveButton }) {
         className="w-10/12 h-[12vw] || mt-[12vh] mx-auto || doc-css  ||
             rounded-[10px] ||  flex flex-col items-center"
       >
-        {/* Replace this with actual doctor image or a placeholder */}
         <div
           className="border-[3px] border-[#7597CD] ||
                 w-1/2 h-1/2 relative bottom-10 rounded-[15vh] flex items-center justify-center bg-white"
         >
-          {/* Placeholder for doctor image */}
           <span className="text-[#5B81BC] text-4xl font-bold">
             {userInfo ? userInfo.name[0] : ""}
           </span>
         </div>
 
-        {/* Fetch doc info from backend and display here*/}
         <p className="relative bottom-5 text-white text-[18px] font-semibold">
           {userInfo ? "Dr. " + userInfo.name : ""}
         </p>
-        {/* <p className="relative bottom-5 text-white text-[14px] font-normal">
-          MBBS
-        </p> */}
+       
         <div className="flex relative bottom-2">
           <button
             className="mr-2 text-white hover:text-gray-200 clickable"
@@ -283,11 +278,8 @@ export function LiveStatus({ appointmentsData }) {
       (appointmentsData.ongoing?.length || 0) +
       (appointmentsData.completed?.length || 0);
 
-    // Assuming reports are generated for completed appointments
-    // This is a mock value, replace with actual logic if you have report data
     const reportsGenerated = completedAppointments;
 
-    // Assuming max tokens is the highest appointment number
     const maxTokens = totalAppointments > 0 ? totalAppointments : 1;
 
     return {
@@ -302,7 +294,6 @@ export function LiveStatus({ appointmentsData }) {
 
   const statsData = calculateStatsData();
 
-  // Calculate percentages for progress bars
   const appointmentsPercentage =
     statsData.totalAppointments > 0
       ? (statsData.completedAppointments / statsData.totalAppointments) * 100
@@ -494,7 +485,6 @@ export function OngoingAppointmentsBox({ appointments, loading }) {
       appointments.ongoing &&
       appointments.ongoing.length > 0
     ) {
-      // Only display maximum of 3 ongoing appointments
       setOngoingAppointments(appointments.ongoing.slice(0, 3));
     } else {
       setOngoingAppointments([]);
@@ -757,22 +747,20 @@ export function UpcomingAppointments({ appointments, loading }) {
 
   useEffect(() => {
     if (appointments) {
-      // Combine queued and notArrived appointments for the upcoming list
       const combined = [
         ...(appointments.queued || []),
         ...(appointments.notArrived || []),
       ];
 
-      // Map to the format expected by the UI
       const mapped = combined.map((app, index) => ({
         srNo: index + 1,
         name: app.patient_name,
         age: app.patient_age,
         region: app.region,
         token_no: app.appointment_number,
-        eta: "15", // This seems to be a fixed value in your mock data
+        eta: "15", 
         reason: app.reason,
-        remarks: "", // You might want to add this field to your API
+        remarks: "",
         edit: "...",
       }));
 
@@ -909,7 +897,6 @@ export default function DashBoard() {
             </div>
             {/* Appointment Confirmation */}
             <div className="flex h-[60vh] overflow-hidden">
-              {/* a small concised box to approve or decline appointments */}
               <div className="flex overflow-hidden w-[59vw]">
                 <OngoingAppointmentsBox
                   appointments={appointments}

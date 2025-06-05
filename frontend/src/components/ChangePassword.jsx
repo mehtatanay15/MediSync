@@ -8,8 +8,8 @@ import {
   MdKeyboardArrowRight,
   MdPassword,
 } from "react-icons/md";
-import resetImg from "../assets/svg/login_img.svg"; // You can use the same image or a different one
-import "../styles/LoginPage.css"; // Using the same CSS file
+import resetImg from "../assets/svg/login_img.svg";
+import "../styles/LoginPage.css"; 
 
 export default function ChangePassword() {
   const navigate = useNavigate();

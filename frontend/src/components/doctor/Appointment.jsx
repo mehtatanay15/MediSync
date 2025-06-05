@@ -30,9 +30,7 @@ export default function Appointment() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
 
-  // Configure axios headers with authentication token
   const authAxios = axios.create({
     headers: {
       Authorization: `Bearer ${authToken}`,
@@ -85,7 +83,6 @@ export default function Appointment() {
 
       await authAxios.put(endpoint);
 
-      // Show success message
       Swal.fire({
         icon: "success",
         title: "Status Updated",
@@ -134,24 +131,7 @@ export default function Appointment() {
     setSelectedDate(e.target.value);
   };
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  // Function to filter appointments based on search term
-  const filterAppointments = (appointmentList) => {
-    if (!searchTerm) return appointmentList;
-
-    return appointmentList.filter(
-      (appointment) =>
-        appointment.patient_name
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()) ||
-        appointment.appointment_token
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-    );
-  };
+ 
 
   // Reusable appointment list component
   const AppointmentList = ({ title, appointmentList, statusColor }) => {
@@ -271,17 +251,7 @@ export default function Appointment() {
       <div className="flex flex-col w-[85vw]">
         {/* Navigation bar */}
         <nav className="flex mt-4 justify-between pr-3">
-          {/* Search Bar */}
-          {/* <div className="flex items-center">
-            <img src={search} className="h-[16px] relative left-6" alt="Search" />
-            <input
-              type="text"
-              className="w-[30vw] h-[32px] pl-8 search-bar border-0 outline-none"
-              placeholder="Search patient name or token..."
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-          </div> */}
+        
 
           {/* Date Filter */}
           <div className="flex ml-auto mr-4">
@@ -294,7 +264,6 @@ export default function Appointment() {
                 className="border border-[#567CBA] rounded-md px-3 py-1"
               />
             </div>
-            {/* <LocationDropdown /> */}
           </div>
         </nav>
 

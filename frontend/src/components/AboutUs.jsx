@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { LandingNavigationBar } from "./LandingPage";
 import { Footer } from "./LandingPage";
 import logo from "./landingPageimages/MediSync-whitebg.png";
-import sharkTankImage from "../assets/svg/post3.jpg"; // Replace with actual image path
+import sharkTankImage from "../assets/svg/post3.jpg"; 
 import { 
   FaUserMd, FaUsers, FaCog, FaTrophy, FaHandshake, FaCode, 
   FaDatabase, FaLayerGroup, FaMobile, FaPalette, FaChalkboardTeacher
@@ -193,7 +193,7 @@ export default function AboutUs() {
             <div className="md:w-1/2">
               <div className="h-64 md:h-full bg-gray-200 flex items-center justify-center">
                 <img 
-                  src= {sharkTankImage} // Replace with actual image path
+                  src= {sharkTankImage} 
                   alt="Shark Tank Trinity Win" 
                   className="object-cover w-full h-full"
                 />

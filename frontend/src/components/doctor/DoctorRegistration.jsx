@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import Cookies from "js-cookie";
 import axios from "axios";
 import Swal from "sweetalert2";
-import "../../styles/LoginPage.css"; // Import the CSS file with your custom styles
+import "../../styles/LoginPage.css";
 
 const DoctorRegistrationForm = () => {
   const navigate = useNavigate();
@@ -214,7 +214,7 @@ const DoctorRegistrationForm = () => {
     clinic_address: `${formData.clinic_area.trim()}, ${formData.clinic_city.trim()}`,
   };
 
-  console.log('Request body:', requestBody); // Debug log
+  console.log('Request body:', requestBody);
 
   try {
     // Create doctor profile
@@ -232,7 +232,7 @@ const DoctorRegistrationForm = () => {
     console.log('Registration response:', res.data); // Debug log
 
     // Check if registration was successful
-    if (res.status === 201 && res.data && res.data.message === "Doctor profile created") {
+    if (res.status === 201) {
       // Update user data in cookies to include profile completion status
       const updatedUserData = {
         ...authUser,
@@ -302,7 +302,6 @@ const DoctorRegistrationForm = () => {
       errorMessage = "Network error. Please check your internet connection and try again.";
       errorTitle = "Connection Error";
     } else {
-      // For any other error that's not the "already exists" case
       Swal.fire({
         icon: "error",
         title: errorTitle,
@@ -314,7 +313,6 @@ const DoctorRegistrationForm = () => {
     setLoading(false);
   }
 };
-  // Step content
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
@@ -615,30 +613,7 @@ const DoctorRegistration = () => {
           return;
         }
 
-        // Optional: Make an API call to check if doctor profile exists
-        // This prevents the form from showing if profile already exists on server
-        // You can uncomment this if you have an endpoint to check doctor profile status
-        /*
-        const response = await axios.get(
-          `https://medisync-backend-up4v.onrender.com/user/doctor/profile/${authUser._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
-        
-        if (response.data) {
-          // Profile exists, redirect to dashboard
-          const updatedUserData = {
-            ...authUser,
-            profileComplete: true,
-          };
-          Cookies.set("userData", JSON.stringify(updatedUserData));
-          setAuthUser(updatedUserData);
-          navigate("/doctor");
-        }
-        */
+       
       } catch (error) {
         // Profile doesn't exist, show registration form
         console.log("No existing profile found, showing registration form");

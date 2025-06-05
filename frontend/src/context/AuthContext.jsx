@@ -18,20 +18,20 @@ export const AuthProvider = ({ children }) => {
   const decodeToken = (token) => {
     try {
       const decoded = jwtDecode(token);
-      return decoded.payload || decoded; // Handle different JWT structures
+      return decoded.payload || decoded;
     } catch (error) {
       console.error("Failed to decode token:", error);
       return null;
     }
   };
 
-  // Check for token in cookies on initial load
   useEffect(() => {
     const initializeAuth = async () => {
       const storedToken = Cookies.get("authToken");
 
       if (storedToken) {
         const userData = decodeToken(storedToken);
+        // console.log(userData);
 
         if (userData) {
           let profileComplete = userData.profileComplete || false;
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
         }
       }
 
-      setIsLoading(false); // Done loading
+      setIsLoading(false);
     };
     // Check if doctor has completed profile
     const checkDoctorProfile = async () => {
@@ -82,24 +82,19 @@ export const AuthProvider = ({ children }) => {
         );
 
         // If we get a successful response, the profile exists
-        console.log(response);
+        // console.log(response);
         // const name = response.data.user.name;
         if (response.data.user) {
           setUserInfo(response.data.user);
         }
       } catch (error) {
         console.log("Profile check error:", error);
-        // If we get a 404 or any error, profile doesn't exist yet
       }
     };
     initializeAuth();
     checkDoctorProfile();
   }, []);
 
-  // Handle login - store token and decode user info
-  // Inside the AuthProvider component in AuthContext.js
-
-  // Modify the login function to check profile completion
   const login = async (token, user, redirectBasedOnRole = true) => {
     const userData = decodeToken(token);
 
@@ -136,28 +131,23 @@ export const AuthProvider = ({ children }) => {
           }
         );
 
-        // If we get a successful response with data, the profile exists
         profileComplete =
           response.data && Object.keys(response.data).length > 0;
 
-        // Update user data with profile completion status
         userData.profileComplete = profileComplete;
       } catch (error) {
         console.log("Profile check error:", error);
-        // If we get a 404 or any error, profile doesn't exist yet
         profileComplete = false;
         userData.profileComplete = false;
       }
     }
 
-    // Update auth user state with complete information
     setAuthUser(userData);
     setUserInfo(user);
     // Store role for quick access
     localStorage.setItem("userRole", userData.role);
     localStorage.setItem("profileComplete", profileComplete);
 
-    // Show success message
     Swal.fire({
       icon: "success",
       title: "Login Successful",
@@ -172,8 +162,6 @@ export const AuthProvider = ({ children }) => {
         navigate("/doctor-registration");
       } else if (userData.role === "Doctor") {
         navigate("/doctor");
-      } else {
-        navigate("/clinic-dashboard");
       }
     }
   };
@@ -181,7 +169,6 @@ export const AuthProvider = ({ children }) => {
   // Handle logout
   const handleLogout = (showConfirmation = true) => {
     const performLogout = () => {
-      // Clear state
       setAuthUser(null);
       setAuthToken(null);
 
@@ -189,7 +176,6 @@ export const AuthProvider = ({ children }) => {
       Cookies.remove("authToken");
       localStorage.removeItem("userRole");
 
-      // Show success message if needed
       if (showConfirmation) {
         Swal.fire({
           icon: "success",
@@ -200,7 +186,6 @@ export const AuthProvider = ({ children }) => {
         });
       }
 
-      // Redirect to login
       navigate("/login");
     };
 
@@ -234,14 +219,12 @@ export const AuthProvider = ({ children }) => {
     return userData.exp > currentTime;
   };
 
-  // Check if user has completed profile (for doctors)
+  // Check if user has completed profile
   const hasCompletedProfile = () => {
     if (!authUser) return false;
 
-    // If not a doctor, return true (no profile needed)
     if (authUser.role !== "Doctor") return true;
 
-    // Check for profile completion flag - this would need to be included in the JWT
     return authUser.profileComplete === true;
   };
 

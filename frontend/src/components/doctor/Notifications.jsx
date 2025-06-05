@@ -16,10 +16,8 @@ import {
 } from "react-icons/ri";
 import "../../styles/Dashboard.css";
 import { SidePanel } from "./DashBoard";
-import { LocationDropdown } from "./PatientList";
 
 function NotificationCard({ notification, onDismiss }) {
-  // Format the sent_at date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-IN", {
@@ -73,13 +71,13 @@ export default function Notifications() {
   const [timeFilter, setTimeFilter] = useState("all");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Sample notification data matching your mongoose schema
-  // Added some variety to demonstrate filtering
+ 
+  
   const notifications = [
     {
       _id: "6461c2b14b35a12f34c56789",
-      patient: "6461c2b14b35a12f34c56789", // ObjectId reference
-      sent_at: "2025-04-04T10:30:00Z", // Today
+      patient: "6461c2b14b35a12f34c56789", 
+      sent_at: "2025-04-04T10:30:00Z", 
       message: "Body text.",
       createdAt: "2025-04-04T10:30:00Z",
       updatedAt: "2025-04-04T10:30:00Z",
@@ -87,7 +85,7 @@ export default function Notifications() {
     {
       _id: "6461c2b14b35a12f34c56790",
       patient: "6461c2b14b35a12f34c56789",
-      sent_at: "2025-04-03T14:20:00Z", // Yesterday
+      sent_at: "2025-04-03T14:20:00Z", 
       message: "Body text.",
       createdAt: "2025-04-03T14:20:00Z",
       updatedAt: "2025-04-03T14:20:00Z",
@@ -95,7 +93,7 @@ export default function Notifications() {
     {
       _id: "6461c2b14b35a12f34c56791",
       patient: "6461c2b14b35a12f34c56790",
-      sent_at: "2025-04-02T09:15:00Z", // This week
+      sent_at: "2025-04-02T09:15:00Z",
       message: "Body text.",
       createdAt: "2025-04-02T09:15:00Z",
       updatedAt: "2025-04-02T09:15:00Z",
@@ -103,7 +101,7 @@ export default function Notifications() {
     {
       _id: "6461c2b14b35a12f34c56792",
       patient: "6461c2b14b35a12f34c56791",
-      sent_at: "2025-03-28T16:45:00Z", // Last week
+      sent_at: "2025-03-28T16:45:00Z",
       message: "Body text.",
       createdAt: "2025-03-28T16:45:00Z",
       updatedAt: "2025-03-28T16:45:00Z",
@@ -111,14 +109,13 @@ export default function Notifications() {
     {
       _id: "6461c2b14b35a12f34c56793",
       patient: "6461c2b14b35a12f34c56792",
-      sent_at: "2025-03-04T11:10:00Z", // Last month
+      sent_at: "2025-03-04T11:10:00Z", 
       message: "Body text.",
       createdAt: "2025-03-04T11:10:00Z",
       updatedAt: "2025-03-04T11:10:00Z",
     },
   ];
 
-  // Function to determine if a date is today, yesterday, this week, etc.
   const getDateCategory = (dateString) => {
     const date = new Date(dateString);
     const today = new Date();
@@ -142,9 +139,7 @@ export default function Notifications() {
     }
   };
 
-  // Function to dismiss a notification
   const handleDismissNotification = (notificationId) => {
-    // In a real app, you would remove the notification from state or mark as read in backend
     console.log(`Dismissed notification ${notificationId}`);
   };
 
@@ -153,7 +148,6 @@ export default function Notifications() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Filter notifications based on search term and time filter
   const filteredNotifications = notifications.filter((notification) => {
     const matchesSearch = notification.message
       .toLowerCase()
@@ -180,7 +174,7 @@ export default function Notifications() {
 
   return (
     <div className="flex flex-col md:flex-row">
-      {/* Side Panel - Hidden on mobile, shown with overlay when menu button clicked */}
+      {/* Side Panel*/}
       <div
         className={`${
           isMobileMenuOpen
@@ -200,7 +194,7 @@ export default function Notifications() {
       </div>
 
       <div className="flex flex-col w-full md:w-[80vw]">
-        {/* Mobile menu toggle button - Only visible on mobile */}
+        {/* Mobile menu toggle button*/}
         <div className="flex md:hidden items-center p-4">
           <button
             onClick={toggleMobileMenu}
@@ -227,7 +221,7 @@ export default function Notifications() {
             />
           </div> */}
 
-          {/* Drop Downs - Stack vertically on small screens */}
+          {/* Drop Downs*/}
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mt-2 md:mt-0">
             {/* <LocationDropdown /> */}
           </div>
@@ -236,12 +230,12 @@ export default function Notifications() {
         {/* Main Content */}
         <div className="main w-[95%] md:w-[100%] mt-3 md:mt-5 p-3 md:p-5 rounded-[20px]">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6">
-            {/* Title - Hidden on mobile as it's now in the header */}
+            {/* Title*/}
             <h1 className="hidden md:block text-xl font-semibold text-[#4F678E] mb-4 md:mb-0">
               Notifications
             </h1>
 
-            {/* Time-based filters - Scrollable on small screens */}
+            {/* Time-based filters*/}
             <div className="flex overflow-x-auto pb-2 w-full md:w-auto gap-2 self-start md:self-auto">
               <button
                 className={`px-3 md:px-4 py-2 flex-shrink-0 rounded-md text-xs md:text-sm ${

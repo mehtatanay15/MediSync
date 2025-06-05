@@ -69,14 +69,6 @@ export function LandingNavigationBar() {
           >
             Testimonials
           </a>
-          {/* <a
-            href="/project-report.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mx-4 lg:mx-4 text-xs lg:text-sm font-medium hover:text-blue-600 transition-colors"
-          >
-            Project Report
-          </a> */}
         </div>
 
         <div className="flex space-x-2 lg:space-x-4 flex-shrink-0">
@@ -144,14 +136,6 @@ export function LandingNavigationBar() {
             >
               Testimonials
             </a>
-            {/* <a
-              href="/project-report.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-3 px-2 border-b hover:bg-gray-50"
-            >
-              Project Report
-            </a> */}
 
             <div className="flex flex-col space-y-3 mt-4 mb-2">
               <button
@@ -191,7 +175,7 @@ export function IntroBox() {
         </p>
       </div>
 
-      {/* Center image - Order changes with responsive layout */}
+      {/* Center image*/}
       <div className="w-full flex justify-center mt-2 order-first lg:order-none lg:mt-0 lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:bottom-0 z-10">
         <img
           src={doc}
@@ -200,9 +184,9 @@ export function IntroBox() {
         />
       </div>
 
-      {/* Content Section - Responsive Layout */}
+      {/* Content Sectio*/}
       <div className="flex flex-col w-full relative mt-3 lg:mt-20 pb-4">
-        {/* Boxes Container - Changes to vertical layout below 1024px */}
+        {/* Boxes Container*/}
         <div className="w-full flex flex-col sm:flex-row items-center lg:z-20">
           {/* Left Box */}
           <div className="w-full lg:w-[27vw] flex flex-col mt-2 lg:mt-4 lg:ml-10">
@@ -324,7 +308,7 @@ export function Working() {
         <p className="text-5xl font-semibold mt-16">How does it work?</p>
 
         <div className="relative flex justify-center">
-          {/* Left Image - Properly Positioned Without Overflow */}
+          {/* Left Image*/}
           <div className="absolute left-0 inset-y-0 flex items-center z-10">
             <img
               src={workingleft}
@@ -378,7 +362,7 @@ export function Working() {
             </div>
           </div>
 
-          {/* Right Image - Properly Positioned Without Overflow */}
+          {/* Right Image*/}
           <div className="absolute right-0 inset-y-0 flex items-center z-10">
             <img
               src={workingright}
@@ -399,7 +383,6 @@ export function Footer() {
         <img src={logo} alt="MediSync" className="h-12 mb-4" />
         <ul className="mt-2">
           <li><a href="/about">About us</a></li>
-          {/* <li><a href="/">Our Services</a></li> */}
           <li><a href="https://docs.google.com/document/d/1stMjZ1d7_OKfT-_D_jHNRAjvMPlvTahC6eQCkXiUuO0/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Project Report</a></li>
           <li><a href="tel:+917900162280">Contact Us</a></li>
         </ul>
@@ -460,7 +443,7 @@ export default function LandingPage() {
             window.location.pathname
           );
         }
-      }, 500); // Small delay to ensure the page is fully loaded
+      }, 500); 
     }
   }, [location]);
 
@@ -506,7 +489,7 @@ export default function LandingPage() {
           </p>
         </div>
 
-        {/* Image Section - Reduced width to bring it closer */}
+        {/* Image Section*/}
         <div className="w-full flex justify-center md:justify-start md:-ml-30 lg:-ml-40">
           <img src={mobile} alt="Mobile App" className="w-[80%] lg:w-[60vw]" />
         </div>

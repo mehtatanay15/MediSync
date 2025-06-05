@@ -1,8 +1,7 @@
-import React, { useState, useEffect,useContext } from "react";
+import  { useState, useEffect,useContext } from "react";
 import { SidePanel } from "./DashBoard";
 import { FaFilter, FaSearch } from "react-icons/fa";
 import { SlArrowRight } from "react-icons/sl";
-import Cookies from "js-cookie";
 import axios from "axios";
 import "../../styles/Dashboard.css";
 import { useAuth } from "../../context/AuthContext";
