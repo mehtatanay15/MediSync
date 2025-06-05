@@ -131,7 +131,24 @@ export default function Appointment() {
     setSelectedDate(e.target.value);
   };
 
- 
+ const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Function to filter appointments based on search term
+  const filterAppointments = (appointmentList) => {
+    if (!searchTerm) return appointmentList;
+
+    return appointmentList.filter(
+      (appointment) =>
+        appointment.patient_name
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        appointment.appointment_token
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+    );
+  };
 
   // Reusable appointment list component
   const AppointmentList = ({ title, appointmentList, statusColor }) => {
