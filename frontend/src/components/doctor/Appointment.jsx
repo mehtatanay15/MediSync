@@ -19,6 +19,7 @@ const statusColors = {
 export default function Appointment() {
   const navigate = useNavigate();
   const { authToken } = useAuth();
+   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
   ); // Format: YYYY-MM-DD
