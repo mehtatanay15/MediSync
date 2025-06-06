@@ -410,13 +410,13 @@ export function LiveStatus({ appointmentsData }) {
 
       {/* Reports Generated */}
       <div className="livestatus-box">
-        <p className="font-semibold text-[14px]">Reports Generated</p>
+        <p className="font-semibold text-[14px]">Reports Received</p>
         <p className="mt-[20px]">
           <span className="font-medium text-[32px]">
             {statsData.reportsGenerated}
           </span>
         </p>
-        <p className="text-[11px] my-1">Total reports generated today.</p>
+        <p className="text-[11px] my-1">Total reports received today.</p>
 
         {/* Progress Bar */}
         <div className="w-10/12">
@@ -452,9 +452,9 @@ export function PatientMiniCard({ patient_name, patient, token }) {
     <div className="w-1/3 px-2">
       <div className="flex flex-col h-[50%] shadow-lg p-8 bg-[#ecf3fe] rounded-2xl items-center gap-[1vh] relative">
         {/* Token Badge */}
-        <div className="absolute top-2 right-2 bg-[#5B81BC] text-white px-3 py-1 rounded-full text-xs font-medium">
+        {/* <div className="absolute top-2 right-2 bg-[#5B81BC] text-white px-3 py-1 rounded-full text-xs font-medium">
           T-{token || "??"}
-        </div>
+        </div> */}
 
         <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#7597CD] mb-3 flex items-center justify-center bg-white text-[#4F678E] text-xl font-bold">
           {getInitials(patient_name)}
