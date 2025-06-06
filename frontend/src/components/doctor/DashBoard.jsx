@@ -814,8 +814,8 @@ export function UpcomingAppointments({ appointments, loading }) {
         <span className="w-1/12 text-[13px]">REGION</span>
         <span className="w-1/12 text-[13px]">ETA</span>
         <span className="w-2/12 text-[13px]">REASON</span>
-        <span className="w-2/12 text-[13px]">REMARKS</span>
-        <span className="w-1/12 text-[13px]">EDIT</span>
+        {/* <span className="w-2/12 text-[13px]">REMARKS</span>
+        <span className="w-1/12 text-[13px]">EDIT</span> */}
       </div>
       {upcomingPatients.map((patient) => (
         <div
