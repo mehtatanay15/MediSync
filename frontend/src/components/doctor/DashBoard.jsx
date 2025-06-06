@@ -410,13 +410,13 @@ export function LiveStatus({ appointmentsData }) {
 
       {/* Reports Generated */}
       <div className="livestatus-box">
-        <p className="font-semibold text-[14px]">Reports Generated</p>
+        <p className="font-semibold text-[14px]">Reports Received</p>
         <p className="mt-[20px]">
           <span className="font-medium text-[32px]">
             {statsData.reportsGenerated}
           </span>
         </p>
-        <p className="text-[11px] my-1">Total reports generated today.</p>
+        <p className="text-[11px] my-1">Total reports received today.</p>
 
         {/* Progress Bar */}
         <div className="w-10/12">
@@ -452,9 +452,9 @@ export function PatientMiniCard({ patient_name, patient, token }) {
     <div className="w-1/3 px-2">
       <div className="flex flex-col h-[50%] shadow-lg p-8 bg-[#ecf3fe] rounded-2xl items-center gap-[1vh] relative">
         {/* Token Badge */}
-        <div className="absolute top-2 right-2 bg-[#5B81BC] text-white px-3 py-1 rounded-full text-xs font-medium">
+        {/* <div className="absolute top-2 right-2 bg-[#5B81BC] text-white px-3 py-1 rounded-full text-xs font-medium">
           T-{token || "??"}
-        </div>
+        </div> */}
 
         <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#7597CD] mb-3 flex items-center justify-center bg-white text-[#4F678E] text-xl font-bold">
           {getInitials(patient_name)}
@@ -759,9 +759,7 @@ export function UpcomingAppointments({ appointments, loading }) {
         region: app.region,
         token_no: app.appointment_number,
         eta: "15", 
-        reason: app.reason,
-        remarks: "",
-        edit: "...",
+        reason: app.reason
       }));
 
       setUpcomingPatients(mapped);
@@ -813,10 +811,10 @@ export function UpcomingAppointments({ appointments, loading }) {
         <span className="w-1/12 text-[13px]">AGE</span>
         <span className="w-1/12 text-[13px]">REGION</span>
         <span className="w-1/12 text-[13px]">ETA</span>
-        <span className="w-2/12 text-[13px]">REASON</span>
-        <span className="w-2/12 text-[13px]">REMARKS</span>
-        <span className="w-1/12 text-[13px]">EDIT</span>
+        <span className="w-5/12 text-[13px]">REASON</span>
       </div>
+
+      {/* Modify the patient row data */}
       {upcomingPatients.map((patient) => (
         <div
           key={patient.srNo}
@@ -828,9 +826,7 @@ export function UpcomingAppointments({ appointments, loading }) {
           <span className="w-1/12 text-[13px]">{patient.age}</span>
           <span className="w-1/12 text-[13px]">{patient.region}</span>
           <span className="w-1/12 text-[13px]">{patient.eta} min</span>
-          <span className="w-2/12 text-[13px] truncate">{patient.reason}</span>
-          <span className="w-2/12 text-[13px]">{patient.remarks}</span>
-          <span className="w-1/12 text-[13px] clickable">{patient.edit}</span>
+          <span className="w-5/12 text-[13px] truncate">{patient.reason}</span>
         </div>
       ))}
     </div>
