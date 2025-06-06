@@ -238,7 +238,7 @@ const DoctorRegistrationForm = () => {
         ...authUser,
         profileComplete: true,
       };
-      Cookies.set("userData", JSON.stringify(updatedUserData));
+      // Cookies.set("userData", JSON.stringify(updatedUserData));
       setAuthUser(updatedUserData);
       
       Swal.fire({
